@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import SelectLang from '@/components/SelectLang';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import styles from './UserLayout.less';
 
 const UserLayout = props => {
@@ -44,7 +44,7 @@ const UserLayout = props => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Spring Boot Plus</span>
+                <span className={styles.title}>Spring Boot Plus Admin React</span>
               </Link>
             </div>
             <div className={styles.desc}>Spring-Boot-Plus 是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架</div>

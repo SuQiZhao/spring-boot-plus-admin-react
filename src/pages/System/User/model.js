@@ -61,28 +61,28 @@ const Model = {
         const {records, total} = data;
         return {...state, records, total};
       }
-      return {...state};
+      return state;
     },
     rGetRoleList(state, action) {
       const {data, success} = action.payload;
       if (success) {
         return {...state, roles: data};
       }
-      return {...state};
+      return state;
     },
     rGetAllDepartmentTree(state, action) {
       const {data, success} = action.payload;
       if (success) {
         return {...state, departments: data};
       }
-      return {...state};
+      return state;
     },
     rGetSysUser(state, action) {
       const {data, success} = action.payload;
       if (success) {
         return {...state, user: data};
       }
-      return {...state};
+      return state;
     },
   },
 };

@@ -107,6 +107,21 @@ export default {
                   name: 'users',
                   component: './System/User/SysUsers',
                 },
+                {
+                  path: '/system/roles',
+                  name: 'roles',
+                  component: './System/Role/SysRoles',
+                },
+                {
+                  path: '/system/departments',
+                  name: 'departments',
+                  component: './System/Department/SysDepartments',
+                },
+                {
+                  path: '/system/permissions',
+                  name: 'permissions',
+                  component: './System/Permission/SysPermissions',
+                },
               ],
             },
             {

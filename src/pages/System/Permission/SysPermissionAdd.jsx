@@ -1,19 +1,20 @@
 import React, {Component} from "react";
 import {connect} from "dva";
-import {Col, Form, Input, Modal, Row, Select, TreeSelect} from "antd";
+import {Col, Form, Input, InputNumber, Modal, Row, Select, TreeSelect} from "antd";
 
-@connect(({SysUserModel, loading}) => ({
-  SysUserModel,
-  submitting: loading.effects['SysUserModel/eAddSysUser'],
+@connect(({SysPermissionModel, loading}) => ({
+  SysPermissionModel,
+  submitting: loading.effects['SysPermissionModel/eAddSysPermission'],
 }))
-class SysUserAdd extends Component {
+class SysPermissionAdd extends Component {
   state = {};
 
   handlerSubmit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {dispatch} = this.props;
-        dispatch({type: `SysUserModel/eAddSysUser`, payload: values}).then(status => {
+        const parentId = values.parentId === '0' ? '' : values.parentId;
+        dispatch({type: `SysPermissionModel/eAddSysPermission`, payload: {...values, parentId}}).then(status => {
           if (status) {
             this.props.handlerVisibleAddModal(true)
           }
@@ -23,13 +24,13 @@ class SysUserAdd extends Component {
   };
 
   render() {
-    const {SysUserModel: {roles = [], departments = []}, submitting, form} = this.props;
+    const {SysPermissionModel: {select = []}, submitting, form} = this.props;
     const {getFieldDecorator} = form;
     return (
       <div>
         <Modal
-          width={416*2}
-          title="添加系统用户"
+          width={416 * 2}
+          title="添加系统角色"
           destroyOnClose
           okText="添加"
           onOk={this.handlerSubmit}
@@ -39,83 +40,89 @@ class SysUserAdd extends Component {
         >
           <Form onSubmit={this.handlerSubmit} layout="vertical">
             <Row gutter={24}>
-
               <Col span={12}>
-                <Form.Item label="用户名">
-                  {getFieldDecorator('username', {
+                <Form.Item label="权限名称">
+                  {getFieldDecorator('name', {
                     rules: [
                       {
                         required: true,
-                        message: '请输入用户名！',
+                        message: '请输入权限名称！',
                       },
                     ],
-                  })(<Input placeholder="请输入用户名"/>)}
+                  })(<Input placeholder="请输入权限名称"/>)}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="昵称">
-                  {getFieldDecorator('nickname', {
+                <Form.Item label="唯一编码">
+                  {getFieldDecorator('code', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入唯一编码！',
+                      },
+                    ],
+                  })(<Input placeholder="请输入唯一编码"/>)}
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="权限排序">
+                  {getFieldDecorator('sort', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入权限排序！',
+                      },
+                    ],
+                  })(<InputNumber style={{width: '100%'}} placeholder="请输入权限排序"/>)}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="图标">
+                  {getFieldDecorator('icon', {
                     rules: [
                       {
                         required: false,
-                        message: '请输入昵称！',
+                        message: '请输入图标！',
                       },
                     ],
-                  })(<Input placeholder="请输入昵称"/>)}
+                  })(<Input placeholder="请输入图标"/>)}
                 </Form.Item>
               </Col>
             </Row>
 
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label="密码">
-                  {getFieldDecorator('password', {
+                <Form.Item label="类型">
+                  {getFieldDecorator('type', {
                     rules: [
                       {
                         required: true,
-                        message: '请输入密码！',
+                        message: '请选择类型！',
                       },
                     ],
-                  })(<Input.Password placeholder="请输入密码"/>)}
+                  })(<Select placeholder="请选择类型">
+                    <Select.Option value="1">菜单</Select.Option>
+                    <Select.Option value="2">按钮</Select.Option>
+                  </Select> )}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="手机号">
-                  {getFieldDecorator('phone', {
+                <Form.Item label="层级">
+                  {getFieldDecorator('level', {
                     rules: [
                       {
                         required: true,
-                        message: '请输入手机号！',
+                        message: '请选择层级！',
                       },
                     ],
-                  })(<Input placeholder="请输入手机号"/>)}
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={24}>
-              <Col span={12}>
-                <Form.Item label="角色">
-                  {getFieldDecorator('roleId', {
-                    rules: [
-                      {
-                        required: true,
-                        message: '请选择角色！',
-                      },
-                    ],
-                  })(<Select showSearch allowClear>{roles.map(role => <Select.Option key={role.id} value={role.id}>{role.name}</Select.Option>)}</Select>)}
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="部门">
-                  {getFieldDecorator('departmentId', {
-                    rules: [
-                      {
-                        required: true,
-                        message: '请选择部门！',
-                      },
-                    ],
-                  })(<TreeSelect showSearch allowClear treeData={departments} />)}
+                  })(<Select placeholder="请选择层级">
+                    <Select.Option value="1">第一级</Select.Option>
+                    <Select.Option value="2">第二级</Select.Option>
+                    <Select.Option value="3">第三级</Select.Option>
+                  </Select> )}
                 </Form.Item>
               </Col>
             </Row>
@@ -132,26 +139,36 @@ class SysUserAdd extends Component {
                       },
                     ],
                   })(<Select>
-                    <Select.Option value="0">禁用</Select.Option>
                     <Select.Option value="1">启用</Select.Option>
-                    <Select.Option value="2">锁定</Select.Option>
+                    <Select.Option value="0">禁用</Select.Option>
                   </Select>)}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="性别">
-                  {getFieldDecorator('gender', {
-                    initialValue: '1',
+                <Form.Item label="父级权限">
+                  {getFieldDecorator('parentId', {
                     rules: [
                       {
                         required: true,
-                        message: '请选择性别！',
+                        message: '请选择父级权限！',
                       },
                     ],
-                  })(<Select>
-                    <Select.Option value="0">女</Select.Option>
-                    <Select.Option value="1">男</Select.Option>
-                  </Select>)}
+                  })(<TreeSelect showSearch allowClear treeData={select}/>)}
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="路径">
+                  {getFieldDecorator('url', {
+                    rules: [
+                      {
+                        required: false,
+                        message: '请输入路径！',
+                      },
+                    ],
+                  })(<Input placeholder="请输入路径" />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -177,4 +194,4 @@ class SysUserAdd extends Component {
   }
 }
 
-export default Form.create({ name: 'sys_user_add' })(SysUserAdd);
+export default Form.create({name: 'sys_department_add'})(SysPermissionAdd);

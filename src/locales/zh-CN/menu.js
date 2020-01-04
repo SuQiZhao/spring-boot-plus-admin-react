@@ -51,4 +51,8 @@ export default {
 
   'menu.system': '系统管理',
   'menu.system.users': '系统用户',
+  'menu.system.roles': '系统角色',
+  'menu.system.departments': '系统部门',
+  'menu.system.permissions': '系统权限',
+
 };

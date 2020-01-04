@@ -103,6 +103,69 @@ const routes = [
                 exact: true,
               },
               {
+                path: '/system/roles',
+                name: 'roles',
+                component: __IS_BROWSER
+                  ? _dvaDynamic({
+                      app: require('@tmp/dva').getApp(),
+                      models: () => [
+                        import(/* webpackChunkName: 'p__System__Role__model.js' */ '/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/pages/System/Role/model.js').then(
+                          m => {
+                            return { namespace: 'model', ...m.default };
+                          },
+                        ),
+                      ],
+                      component: () =>
+                        import(/* webpackChunkName: "layouts__BasicLayout" */ '../System/Role/SysRoles'),
+                      LoadingComponent: require('/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/components/PageLoading/index')
+                        .default,
+                    })
+                  : require('../System/Role/SysRoles').default,
+                exact: true,
+              },
+              {
+                path: '/system/departments',
+                name: 'departments',
+                component: __IS_BROWSER
+                  ? _dvaDynamic({
+                      app: require('@tmp/dva').getApp(),
+                      models: () => [
+                        import(/* webpackChunkName: 'p__System__Department__model.js' */ '/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/pages/System/Department/model.js').then(
+                          m => {
+                            return { namespace: 'model', ...m.default };
+                          },
+                        ),
+                      ],
+                      component: () =>
+                        import(/* webpackChunkName: "layouts__BasicLayout" */ '../System/Department/SysDepartments'),
+                      LoadingComponent: require('/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/components/PageLoading/index')
+                        .default,
+                    })
+                  : require('../System/Department/SysDepartments').default,
+                exact: true,
+              },
+              {
+                path: '/system/permissions',
+                name: 'permissions',
+                component: __IS_BROWSER
+                  ? _dvaDynamic({
+                      app: require('@tmp/dva').getApp(),
+                      models: () => [
+                        import(/* webpackChunkName: 'p__System__Permission__model.js' */ '/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/pages/System/Permission/model.js').then(
+                          m => {
+                            return { namespace: 'model', ...m.default };
+                          },
+                        ),
+                      ],
+                      component: () =>
+                        import(/* webpackChunkName: "layouts__BasicLayout" */ '../System/Permission/SysPermissions'),
+                      LoadingComponent: require('/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/src/components/PageLoading/index')
+                        .default,
+                    })
+                  : require('../System/Permission/SysPermissions').default,
+                exact: true,
+              },
+              {
                 component: () =>
                   React.createElement(
                     require('/Users/xiaoshitou/Documents/GitHub/spring-boot-plus-admin-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
