@@ -1,21 +1,45 @@
 # spring-boot-plus-admin-react
-spring-boot-plus-admin-react
 
-# 如何启动
+## 管理系统主页
+[http://47.105.159.10/](http://47.105.159.10/)
 
-推荐使用 yarn 或者 cnpm , tyarn
+### 设置nodejs镜像
+```text
+npm config set registry https://registry.npm.taobao.org
+```
 
-## yarn
-$ yarn
-$ yarn start 或者 umi dev
+### npm install
+```text
+npm install
+```
 
-## npm/cnpm
-$ cnpm install
-$ cnpm start 或者 umi dev
+## 使用方式一
+### npm启动应用
+```text
+npm start
+```
 
-个人推荐  cnpm
+### npm build
+> 打包后的目录：dist
+```text
+npm run-script build
+```
 
-# 常见问题
+## 使用方式二
+### 安装umi
+```text
+sudo npm install -g umi
+```
 
-后端代码 暂时使用: https://github.com/zhengchalei/spring-boot-plus
+### 启动应用
+```text
+umi dev
+```
+
+### 打包
+```text
+umi build
+```
+
+
 
